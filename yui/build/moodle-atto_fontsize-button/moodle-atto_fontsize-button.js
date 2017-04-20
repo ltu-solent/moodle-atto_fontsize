@@ -33,34 +33,66 @@ YUI.add('moodle-atto_fontsize-button', function (Y, NAME) {
  * @extends M.editor_atto.EditorPlugin
  */
 
+// SSU_AMEND START - REMOVE LARGE HEADINGS FROM ATTO FONT SIZE
+// var sizes = [
+        // {
+            // name: "xx-small"
+        // }, {
+            // name: "x-small"
+        // }, {
+            // name: "small"
+        // }, {
+            // name: "medium"
+        // }, {
+            // name: "large"
+        // }, {
+            // name: "x-large"
+        // }, {
+            // name: "xx-large"
+        // }
+    // ];
+
 var sizes = [
-        {
-            name: "xx-small"
-        }, {
-            name: "x-small"
-        }, {
-            name: "small"
-        }, {
-            name: "medium"
-        }, {
-            name: "large"
-        }, {
-            name: "x-large"
-        }, {
-            name: "xx-large"
-        }
-    ];
+  {
+      name: "inherit"
+  }, {
+      name: "medium"
+  }, {
+      name: "large"
+  }, {
+      name: "x-large"
+  }
+];
+// SSU_AMEND END
 
 Y.namespace('M.atto_fontsize').Button = Y.Base.create('button', Y.M.editor_atto.EditorPlugin, [], {
     initializer: function() {
         var items = [];
-        Y.Array.each(sizes, function(size) {
-            items.push({
-                text: '<span style="font-size:' + size.name + ';">' + size.name + '</span>',
-                callbackArgs: size.name,
-                callback: this._changeStyle
-            });
-        });
+// SSU_AMEND START - REMOVE LARGE HEADINGS FROM ATTO FONT SIZE
+        // Y.Array.each(sizes, function(size) {
+            // items.push({
+                // text: '<span style="font-size:' + size.name + ';">' + size.name + '</span>',
+                // callbackArgs: size.name,
+                // callback: this._changeStyle
+            // });
+        // });
+
+     Y.Array.each(sizes, function(size) {
+       if(size.name == 'inherit'){
+          items.push({
+          text: '<span style="font-size:' + size.name + ';">Normal</span>',
+          callbackArgs: size.name,
+          callback: this._changeStyle
+          });
+        }else{
+          items.push({
+           text: '<span style="font-size:' + size.name + ';">' + size.name + '</span>',
+           callbackArgs: size.name,
+           callback: this._changeStyle
+          });
+        }
+     });
+// SSU_AMEND END
 
         this.addToolbarMenu({
             globalItemConfig: {
